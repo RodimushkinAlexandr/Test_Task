@@ -6,6 +6,14 @@ import vue from "@vitejs/plugin-vue";
 export default defineConfig({
   base: "/Test_Task",
   plugins: [vue()],
+  server: {
+    watch: {
+      usePolling: true,
+    },
+    host: true,
+    strictPort: true,
+    port: 5173,
+  },
   resolve: {
     alias: [
       {
