@@ -10,7 +10,7 @@ export const UsersStore = defineStore({
   state: (): UserState => ({
     user: {
       id: 123,
-      name: "username",
+      name: "Alexandr",
     },
   }),
 });

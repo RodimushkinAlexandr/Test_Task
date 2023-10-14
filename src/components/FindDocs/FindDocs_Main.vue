@@ -4,25 +4,25 @@ import FindDocsResults from "@/components/FindDocs/FindDocs_Main/FindDocs_Main-R
 import FindDocsFind from "@/components/FindDocs/FindDocs_Main/FindDocs_Main-Find.vue";
 import FindDocsFindNo from "@/components/FindDocs/FindDocs_Main/FindDocs_Main-FindNo.vue";
 import { FindDocsStore } from "@/store/FindDocsStore";
-
 import Doc from "@/types/Doc";
 import LoaderSpinner from "../UI_KIT/loaderSpinner.vue";
 import { ref, watchEffect } from "vue";
 import FindDocsMainResultsOne from "./FindDocs_Main/FindDocs_Main-ResultsOne.vue";
 import ErrorSearch from "../UI_KIT/errorSearch.vue";
 import DialogWindow from "../UI_KIT/dialogWindow.vue";
+import { desktopLayoutKey } from "@/types/desktopLayout";
+import { inject } from "vue";
 
-const props = defineProps<{
-  desktopLayout: boolean;
-}>();
+const desktopLayout = inject(desktopLayoutKey);
 
 const findDocsStore = FindDocsStore();
 findDocsStore.getAllDocs();
 
 const dialogVisible = ref<boolean>(false);
+
 const findDoc = (doc: Doc) => {
   findDocsStore.doc = doc;
-  if (!props.desktopLayout) {
+  if (!desktopLayout) {
     dialogVisible.value = true;
   }
 };

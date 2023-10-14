@@ -1,17 +1,14 @@
 <script setup lang="ts">
-interface Props {
-  username?: string;
-}
+import User, { userKey } from "@/types/User";
+import { inject } from "vue";
 
-const props = withDefaults(defineProps<Props>(), {
-  username: "username",
-});
+const user = inject<User>(userKey);
 </script>
 
 <template>
   <header class="findDocs__header">
     <p class="findDocs__header_item title">MyApp</p>
-    <p class="findDocs__header_item username">{{ username }}</p>
+    <p class="findDocs__header_item username">{{ user?.name }}</p>
   </header>
 </template>
 

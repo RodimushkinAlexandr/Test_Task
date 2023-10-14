@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import FindDocs from "@/views/FindDocs.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,7 +6,7 @@ const router = createRouter({
     {
       path: "/",
       name: "FindDocs",
-      component: FindDocs,
+      component: () => import("../views/FindDocs.vue"),
       meta: {
         enterClass: "animate__animated animate__fadeInLeft",
         leaveClass: "animate__animated animate__fadeOutRight",
