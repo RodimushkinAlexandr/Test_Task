@@ -33,10 +33,11 @@ export const FindDocsStore = defineStore({
       try {
         this.doc = null;
         this.errorSearch = false;
-
         const doc = await api.get(`/user/docs?search=${this.findSearchId}`);
+
         //doc.status === 200 - хотел сделать так, но в случае ответа 0, статус всё равно 200((
         if (doc.data.length > 0) {
+          //оч быстро получает ответ, а вы просили показывать что идёт запрос
           setTimeout(() => {
             this.doc = doc.data[0];
           }, 1000);
