@@ -13,16 +13,15 @@ import DialogWindow from "../UI_KIT/dialogWindow.vue";
 import { desktopLayoutKey } from "@/types/desktopLayout";
 import { inject } from "vue";
 
-const desktopLayout = inject(desktopLayoutKey);
-
 const findDocsStore = FindDocsStore();
 findDocsStore.getAllDocs();
 
+const desktopLayout = inject<boolean>(desktopLayoutKey) as boolean;
 const dialogVisible = ref<boolean>(false);
 
 const findDoc = (doc: Doc) => {
   findDocsStore.doc = doc;
-  if (!desktopLayout) {
+  if (!desktopLayout.value) {
     dialogVisible.value = true;
   }
 };
