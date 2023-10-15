@@ -1,7 +1,7 @@
 import { ref, onUnmounted } from "vue";
 
 export function useDesktopLayout() {
-  const desktopLayout = ref<boolean>(false);
+  const desktopLayout = ref<boolean>(true);
 
   function onResize() {
     desktopLayout.value = window.innerWidth > 480;

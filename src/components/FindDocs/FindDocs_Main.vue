@@ -5,18 +5,29 @@ import FindDocsFind from "@/components/FindDocs/FindDocs_Main/FindDocs_Main-Find
 import FindDocsFindNo from "@/components/FindDocs/FindDocs_Main/FindDocs_Main-FindNo.vue";
 import { FindDocsStore } from "@/store/FindDocsStore";
 import Doc from "@/types/Doc";
-import LoaderSpinner from "../UI_KIT/loaderSpinner.vue";
-import { ref, watchEffect } from "vue";
+import { defineAsyncComponent, ref, watchEffect } from "vue";
 import FindDocsMainResultsOne from "./FindDocs_Main/FindDocs_Main-ResultsOne.vue";
-import ErrorSearch from "../UI_KIT/errorSearch.vue";
-import DialogWindow from "../UI_KIT/dialogWindow.vue";
 import { useDesktopLayout } from "@/utils/useDesktopLayout";
+
+const DialogWindow = defineAsyncComponent({
+  loader: () => import("../UI_KIT/dialogWindow.vue"),
+  suspensible: true,
+});
+
+const LoaderSpinner = defineAsyncComponent({
+  loader: () => import("../UI_KIT/loaderSpinner.vue"),
+  suspensible: true,
+});
+
+const ErrorSearch = defineAsyncComponent({
+  loader: () => import("../UI_KIT/errorSearch.vue"),
+  suspensible: true,
+});
 
 const findDocsStore = FindDocsStore();
 findDocsStore.getAllDocs();
 
 const { desktopLayout } = useDesktopLayout();
-
 const dialogVisible = ref<boolean>(false);
 
 const findDoc = (doc: Doc) => {
@@ -61,8 +72,12 @@ watchEffect(() => {
         :doc="findDocsStore.doc"
         @doc="findDoc"
       />
-      <ErrorSearch v-else-if="findDocsStore.errorSearch" />
-      <LoaderSpinner v-else />
+      <Suspense v-else-if="findDocsStore.errorSearch">
+        <ErrorSearch />
+      </Suspense>
+      <Suspense v-else>
+        <LoaderSpinner />
+      </Suspense>
     </section>
     <section v-if="desktopLayout" class="findDocs__main-section findDocsFind">
       <FindDocsFind
@@ -73,13 +88,15 @@ watchEffect(() => {
       />
       <FindDocsFindNo v-else />
     </section>
-    <DialogWindow v-model:show="dialogVisible">
-      <FindDocsFind
-        v-if="findDocsStore.doc"
-        :doc="findDocsStore.doc"
-        @downloadDoc="downloadDoc"
-        @deleteDoc="deleteDoc"
-    /></DialogWindow>
+    <Suspense v-if="dialogVisible">
+      <DialogWindow @updateFalse="dialogVisible = false">
+        <FindDocsFind
+          v-if="findDocsStore.doc"
+          :doc="findDocsStore.doc"
+          @downloadDoc="downloadDoc"
+          @deleteDoc="deleteDoc"
+      /></DialogWindow>
+    </Suspense>
   </main>
 </template>
 

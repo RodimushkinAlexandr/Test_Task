@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import inputUI from "@/components/UI_KIT/my-inputNumber.vue";
 import subTitle from "@/components/UI_KIT/subTitle.vue";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 interface Props {
   modelValue: number;

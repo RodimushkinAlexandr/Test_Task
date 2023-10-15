@@ -1,20 +1,16 @@
 <script setup lang="ts">
-const props = defineProps<{
-  show: boolean;
-}>();
-
 const emit = defineEmits<{
-  (e: "update:show", value: boolean): void;
+  (e: "updateFalse", value: boolean): void;
 }>();
 
 const hideDialog = () => {
-  emit("update:show", false);
+  emit("updateFalse", false);
 };
 </script>
 
 <template>
   <transition name="dialog">
-    <div class="dialog" v-if="show" @click="hideDialog">
+    <div class="dialog" @click="hideDialog">
       <div @click.stop class="dialog__list">
         <slot></slot>
         <img
