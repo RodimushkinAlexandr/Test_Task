@@ -10,13 +10,13 @@ import { ref, watchEffect } from "vue";
 import FindDocsMainResultsOne from "./FindDocs_Main/FindDocs_Main-ResultsOne.vue";
 import ErrorSearch from "../UI_KIT/errorSearch.vue";
 import DialogWindow from "../UI_KIT/dialogWindow.vue";
-import { desktopLayoutKey } from "@/types/desktopLayout";
-import { inject } from "vue";
+import { useDesktopLayout } from "@/utils/useDesktopLayout";
 
 const findDocsStore = FindDocsStore();
 findDocsStore.getAllDocs();
 
-const desktopLayout = inject<boolean>(desktopLayoutKey) as boolean;
+const { desktopLayout } = useDesktopLayout();
+
 const dialogVisible = ref<boolean>(false);
 
 const findDoc = (doc: Doc) => {
@@ -117,3 +117,4 @@ watchEffect(() => {
   }
 }
 </style>
+@/utils/useDesktopLayout
